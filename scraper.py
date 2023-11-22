@@ -25,6 +25,7 @@ def get_text(XPATH: str):
 def save_file():
     df = pd.DataFrame(data)
     df.to_csv('data.csv')
+    print("File saved!")
 
 
 def scraper():
