@@ -31,7 +31,7 @@ def scraper():
         now = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
         new_entry = [now, apr]
         data.append(new_entry)
-        time.sleep(884)
+        time.sleep(1784)
         print("New data entry")
 
 
