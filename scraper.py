@@ -3,23 +3,28 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import subprocess
 import threading
-
+import pandas as pd
 
 from datetime import datetime
 import time
 
+data = []
 
-def get_text(XPATH: str):
-    return driver.find_element(By.XPATH, XPATH).text
-
-
+# Start browser
 options = webdriver.ChromeOptions()
 options.add_argument("--headless=new")
 options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(options=options)
 driver.get("https://pancakeswap.finance/position-managers?sortBy=earned&search=eth")
 
-data = []
+
+def get_text(XPATH: str):
+    return driver.find_element(By.XPATH, XPATH).text
+
+
+def save_file():
+    df = pd.DataFrame(data)
+    df.to_csv('data.csv')
 
 
 def scraper():
@@ -36,7 +41,12 @@ def scraper():
 
 
 def data_saver():
+    # Wait first entry be created
+    time.sleep(60)
     while True:
+        # Update csv file with new data
+        save_file()
+
         # Git add
         subprocess.run(["git", "add", "."])
 
